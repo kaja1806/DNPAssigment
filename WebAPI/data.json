@@ -1,0 +1,82 @@
+{
+  "Users": [
+    {
+      "Id": 1,
+      "UserName": "Florence"
+    },
+    {
+      "Id": 2,
+      "UserName": "Kacper"
+    },
+    {
+      "Id": 3,
+      "UserName": "Weronika"
+    },
+    {
+      "Id": 4,
+      "UserName": "Hey"
+    },
+    {
+      "Id": 5,
+      "UserName": "Pauline"
+    },
+    {
+      "Id": 6,
+      "UserName": "String"
+    },
+    {
+      "Id": 7,
+      "UserName": "String3"
+    },
+    {
+      "Id": 8,
+      "UserName": "Strings"
+    }
+  ],
+  "Posts": [
+    {
+      "Id": 1,
+      "Title": "Post"
+    },
+    {
+      "Id": 2,
+      "Title": "string"
+    },
+    {
+      "Id": 3,
+      "Title": "ok"
+    },
+    {
+      "Id": 4,
+      "Title": "string"
+    },
+    {
+      "Id": 5,
+      "Title": "string"
+    },
+    {
+      "Id": 6,
+      "Title": "nothing"
+    },
+    {
+      "Id": 7,
+      "Title": "again"
+    },
+    {
+      "Id": 8,
+      "Title": "hi"
+    },
+    {
+      "Id": 9,
+      "Title": "hey"
+    },
+    {
+      "Id": 10,
+      "Title": "My first post"
+    },
+    {
+      "Id": 11,
+      "Title": "My second post"
+    }
+  ]
+}
