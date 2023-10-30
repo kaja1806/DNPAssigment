@@ -5,11 +5,8 @@ using Shared.Models;
 
 namespace WebAPI.Controllers;
 
-
 [ApiController]
 [Route("[controller]")]
-
-
 public class UsersController : ControllerBase
 {
     private readonly IUserLogic userLogic;
@@ -18,6 +15,7 @@ public class UsersController : ControllerBase
     {
         this.userLogic = userLogic;
     }
+
     //method for endpoint
     [HttpPost]
     public async Task<ActionResult<User>> CreateAsync(UserCreationDto dto)
@@ -33,5 +31,4 @@ public class UsersController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-
 }

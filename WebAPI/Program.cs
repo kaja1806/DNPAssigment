@@ -1,10 +1,16 @@
 using Application.DaoInterfaces;
 using Application.Logic;
 using Application.LogicInterfaces;
+using Database.Models;
 using FileData;
 using FileData.DAOs;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 // Add services to the container.
 

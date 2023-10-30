@@ -41,6 +41,4 @@ public class UserLogic : IUserLogic
         if (userName.Length > 15)
             throw new Exception("Username must be less than 16 characters!");
     }
-
-    
 }
