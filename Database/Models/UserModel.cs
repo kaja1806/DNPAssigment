@@ -1,4 +1,3 @@
-
 namespace Database.Models;
 
 public class UserModel
