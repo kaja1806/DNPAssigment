@@ -5,5 +5,7 @@ namespace Application.LogicInterfaces;
 
 public interface IPostLogic
 {
-    Task<Post> CreateAsync(PostCreationDto dto); 
+    Task<Post> CreateAsync(PostCreationDto dto);
+    public Task<IEnumerable<Post>> GetAsync(ViewAllPostsDto postsContains);
+    Task<ViewAPostDto> GetByIdAsync(int id);  // title also?
 }

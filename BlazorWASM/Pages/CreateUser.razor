@@ -5,19 +5,38 @@
 @inject IUserService UserService;
 
 <div class="card">
-    <h3>Create User</h3>  
+    <h5>Create User</h5>  
+    
     <div class="form-group field">
-        <label>User name:</label>
-        <input type="text" @bind="userName" @bind:event="oninput"/>
+        
+        <div>
+            @*<label>User name:</label>*@
+            <input type="text" @bind="userName" placeholder="Username" @bind:event="oninput"/>
+        </div>
         @if (!string.IsNullOrEmpty(resultMsg))
         {
             <label style="color: @color">@resultMsg</label>
         }
     </div>
     
+    <div class="form-group field">
+        <div>
+            @*<label>Password:</label>*@
+            <input type="text" @bind="userName" placeholder="Password" @bind:event="oninput"/>  
+            @*if (!string.IsNullOrEmpty(resultMsg))
+        {
+            <label style="color: @color">@resultMsg</label>
+        }*@
+        </div>
+        </div>
+    
     <div class="button-row">
         <button @onclick="Create" disabled="@(string.IsNullOrEmpty(userName))" class="acceptbtn">Create</button>
     </div>
+    
+@**@     @*<div class="button-row">
+            <button @onclick="Create" disabled="@(string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))" class="acceptbtn">Create</button>
+        </div>*@
 </div>
 
 
@@ -36,8 +55,12 @@
  
             await UserService.Create(new UserCreationDto(userName));   // gets the username entered
             userName = "";
-            resultMsg = "User successfully created";  
-            color = "green";
+            //password...
+            
+            /*
+             ACTIVATE THIS PART BELOW THE PASSWORD FIELD INSTEAD WHEN SUCCESSFUL
+             resultMsg = "User successfully created";  
+            color = "green";*/
         }
         catch (Exception e)
         {   //part where validation is? when to say it was taken or already exist, etc?

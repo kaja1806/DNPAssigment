@@ -29,8 +29,47 @@ public class PostHttpClient : IPostService //Changes
         })!;
         return post;
     }
-    /*public Task<IEnumerable<Post>> GetUsers(string? usernameContains = null)  //get back here when needed for getting posts?
+
+    public async Task<IEnumerable<Post>> GetPosts(string? postsContains = null)
+  
     {
-        throw new NotImplementedException();
-    }*/
+        string uri = "/posts";
+        if (!string.IsNullOrEmpty(postsContains))
+        {
+            uri += $"?title={postsContains}";
+        }
+        HttpResponseMessage response = await client.GetAsync(uri);
+        string result = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+
+        Console.WriteLine(result);
+        IEnumerable<Post> posts = JsonSerializer.Deserialize<IEnumerable<Post>>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        return posts;  // or titles?
+    }
+    
+    //view 1 post
+    
+    public async Task<ViewAPostDto> GetByIdAsync(int id)
+    {
+        HttpResponseMessage response = await client.GetAsync($"/posts/{id}");
+        string content = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(content);
+        }
+
+        ViewAPostDto post = JsonSerializer.Deserialize<ViewAPostDto>(content, 
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            }
+        )!;
+        return post;
+    }
 }
