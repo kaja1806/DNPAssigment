@@ -9,28 +9,30 @@ public class UserLogic : IUserLogic
 {
     private readonly IUserDao userDao;
 
-    public UserLogic(IUserDao userDao)  
+    public UserLogic(IUserDao userDao)
     {
         this.userDao = userDao;
     }
-    public async Task<User> CreateAsync(UserCreationDto dto)
-    {  
-        User? existing = await userDao.GetByUsernameAsync(dto.UserName); 
+
+    public async Task<User> CreateUser(UserCreationDto dto)
+    {
+        User? existing = await userDao.GetByUsernameAsync(dto.UserName);
         if (existing != null)
             throw new Exception("Username already taken!");
 
         ValidateData(dto);
         User toCreate = new User
         {
-            UserName = dto.UserName
+            UserName = dto.UserName,
+            Password = dto.Password
         };
-    
-        
+
+
         User created = await userDao.CreateAsync(toCreate);
-        
+
         return created;
     }
-   
+
     private static void ValidateData(UserCreationDto userToCreate)
     {
         string userName = userToCreate.UserName;

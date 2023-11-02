@@ -1,4 +1,4 @@
-@page "/CreateUser"
+@*@page "/CreateUser"
 
 @using HttpClients.ClientInterfaces
 @using global::Shared.DTOs
@@ -10,7 +10,7 @@
     <div class="form-group field">
         
         <div>
-            @*<label>User name:</label>*@
+            $1$<label>User name:</label>#1#
             <input type="text" @bind="userName" placeholder="Username" @bind:event="oninput"/>
         </div>
         @if (!string.IsNullOrEmpty(resultMsg))
@@ -21,12 +21,12 @@
     
     <div class="form-group field">
         <div>
-            @*<label>Password:</label>*@
-            <input type="text" @bind="userName" placeholder="Password" @bind:event="oninput"/>  
-            @*if (!string.IsNullOrEmpty(resultMsg))
+            $1$<label>Password:</label>#1#
+            <input type="text" @bind="Password" placeholder="Password" @bind:event="oninput"/>  
+            $1$if (!string.IsNullOrEmpty(resultMsg))
         {
             <label style="color: @color">@resultMsg</label>
-        }*@
+        }#1#
         </div>
         </div>
     
@@ -34,15 +34,16 @@
         <button @onclick="Create" disabled="@(string.IsNullOrEmpty(userName))" class="acceptbtn">Create</button>
     </div>
     
-@**@     @*<div class="button-row">
+$1$#1#     $1$<div class="button-row">
             <button @onclick="Create" disabled="@(string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))" class="acceptbtn">Create</button>
-        </div>*@
+        </div>#1#
 </div>
 
 
 
 @code {
     private string userName = "";  // holds entered uname
+    private string password;
     private string resultMsg = "";  // msg for the user about entered data/ uname
     private string color = ""; // color of msd
     
@@ -66,6 +67,87 @@
         {   //part where validation is? when to say it was taken or already exist, etc?
             Console.WriteLine(e);
             resultMsg = e.Message;
+            color = "red";
+        }
+    }
+
+    public string? Password { get; set; }
+
+}*@
+
+@page "/CreateUser"
+
+@using HttpClients.ClientInterfaces
+@using global::Shared.DTOs
+@inject IUserService UserService;
+
+<div class="card">
+    <h5>Create User</h5>
+
+    <!-- Username Input -->
+    <div class="form-group field">
+        <div>
+            <input type="text" @bind="userName" placeholder="Username" @bind:event="oninput" />
+        </div>
+        @if (!string.IsNullOrEmpty(resultMsg))
+        {
+            <label style="color: @color">@resultMsg</label>
+        }
+    </div>
+
+    <!-- Password Input -->
+    <div class="form-group field">
+        <div>
+            <input type="password" @bind="Password" placeholder="Password" @bind:event="oninput" />
+        </div>
+    </div>
+
+    <!-- Create Button -->
+    <div class="button-row">
+        <button @onclick="Create" disabled="@(string.IsNullOrEmpty(userName))" class="acceptbtn">Create</button>
+    </div>
+</div>
+
+@code {
+    private string userName = "";
+    private string? Password;
+    private string resultMsg = "";
+    private string color = "";
+
+    private async Task Create()
+    {
+        // Clear any previous result messages
+        resultMsg = "";
+
+        try {
+            // Validate input fields before making the request
+            if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(Password)) {
+                resultMsg = "Please enter both username and password.";
+                color = "red";
+            } else {
+                // Attempt to create a new user
+                await UserService.Create(new UserCreationDto(userName, Password));
+
+                // Clear the input fields after successful user creation
+                userName = "";
+                Password = null;
+
+                // Display a success message
+                resultMsg = "User successfully created";
+                color = "green";
+            }
+        } catch (Exception e) {
+            // Handle specific error scenarios
+            if (e is HttpRequestException httpException) {
+                if (httpException.Message.Contains("duplicate username")) {
+                    resultMsg = "Username already exists. Please choose a different one.";
+                } else {
+                    resultMsg = "An error occurred during user creation.";
+                }
+            } else {
+                // Handle other, possibly unexpected errors
+                resultMsg = "An unknown error occurred.";
+            }
             color = "red";
         }
     }
