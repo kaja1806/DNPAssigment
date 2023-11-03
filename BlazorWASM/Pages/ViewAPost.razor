@@ -76,12 +76,13 @@
     [Parameter]
     public int Id { get; set; }
 
+
    // private IEnumerable<Post>? posts;
  //   private ViewAPostDto post;
 
     private ViewAPostDto post;
     private string msg = "";
-
+    private IEnumerable<Post> posts;
 
     protected override async Task OnInitializedAsync()
     {
@@ -96,7 +97,8 @@
                 msg = "Post not found";
             }
     //User currentlyAssigned = users.First(user => user.UserName.Equals(todoData.OwnerName));
-            
+
+
         }
         catch (Exception e)
         {
@@ -104,6 +106,13 @@
             msg = e.Message;
         }
     }
+    
+    /*
+    private void NavigateToPost(int postId)
+    {
+        NavigationManager.ViewAPost($"/ViewAPost/{postId}");
+    }
+    */
 
 }
     

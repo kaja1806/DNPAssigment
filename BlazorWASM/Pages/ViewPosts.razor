@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="css/ViewPosts.razor.css" />
 *@
 
-<h3 style="text-align: center">Overview of all Posts</h3>
+<h5 style="text-align: center">Overview of all Posts</h5>
 
 @if (!string.IsNullOrEmpty(msg))
 {
@@ -24,21 +24,35 @@ else if (!posts.Any())
 {
     <span>No posts found</span>
 }
-else
+else if (posts != null && posts.Any())  // new post should be on top
+      
 {
     <div class="posts-container">
-        @foreach (Post post in posts)
+        
+        @*@foreach (Post post in posts)
+            {
+                <div class="post-card">
+                    <button class="post-title" @onclick="() => NavigateToPost(post.Id)">
+                        @post.Title
+                    </button>
+                </div>
+            }*@
+        @foreach (Post post in posts.Reverse()) // new post should be on top
         {
             <div class="post-card">
+                <div class="post-title">
+                    @post.Title
+                </div>
+                
                 @*<label>@post.Title</label>*@
-                <a href="/ViewAPost/@post.Id"> 
+                @*<a href="/ViewAPost/@post.Id"> 
                         @post.Title
                         
-                    </a>
+                    </a>*@
+
             </div>
         }
     </div>
-}
 
 
 
@@ -51,7 +65,7 @@ else
         msg = "";
         try
         {
-            posts = await PostService.GetPosts();  //GetPosts in web aPI first
+            posts = await PostService.GetPosts(); //GetPosts in web aPI first
         }
         catch (Exception e)
         {
@@ -59,6 +73,6 @@ else
             msg = e.Message;
         }
     }
-    
-    
+
+}   
 }

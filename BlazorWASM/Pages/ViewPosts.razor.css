@@ -2,29 +2,38 @@
 
 /* Style for the post-card container  #f2f2f2; */
 .posts-container {
-    background-color: rgba(242, 242, 242, 0.19);
-    border: 1px solid #ddd;
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+
+    background-color: #ffffff; /* White background */
+    border: 1px solid #ccc; /* Light gray border */
+    box-shadow: 0 4px 8px 0 rgb(89 89 89 / 20%);
     transition: 0.3s;
-    width: 350px;
-    padding: 25px;
-    text-align: center;
-    margin: 50px auto auto;
-    border-radius: 15px;
-    
+    max-width: 800px; /* Adjust the width according to your layout */
+    margin: 50px auto; /* Center the container */
+    border-radius: 5px; /* Slightly rounded corners */
+    padding: 20px; /* Reduce the padding a bit */
+
+
 }
 
 /* Style for the links within the post-card */
 .post-card {
-    color: #007bff;
-    text-decoration: none;
-  /*  border: 2px solid #0a53be; !* Customize the border style *!*/
-    padding: 10px; /* Add some padding to make it look better */
-    margin: 5px; /* Add some margin for spacing */
-    display: inline-block; /* Ensure that each title is on a separate line */
     text-align: center;
+
+    color: #0079d3; /* Reddit's blue link color */
+    text-decoration: none;
+    border: 1px solid #9d9898; /* Light gray border */
+    padding: 10px;
+    margin: 10px 0; /* Increase the top and bottom margin for spacing */
+    display: block; /* Each post card should be on a separate line */
+    border-radius: 30px;
+    box-shadow: 0 4px 8px 0 rgb(36 9 9 / 20%);
+
 }
+/*.post-title {
+    color: #0079d3; !* Reddit's blue link color or your preferred color *!
+    font-weight: bold; !* Optionally, make the title bold *!
+}*/
 
 .post-card :hover {
-   /* text-decoration: underline;*/
+    background-color: #c3bcbc;
 }
