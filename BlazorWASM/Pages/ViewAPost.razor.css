@@ -1,0 +1,51 @@
+/* ViewPosts.css */
+
+/* Style for the post-card container */
+
+
+.card :hover {
+    text-decoration: underline;
+}
+
+/* viewpost.css */
+
+.card {
+    color: #007bff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 350px;
+    padding: 25px;
+    text-align: center;
+    margin: 50px auto auto;
+    border-radius: 15px;
+}
+
+.post-content {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+ /*   background-color: #f2f2f2;*/
+ /*   border: 1px solid #ddd;*/
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 350px;
+    text-align: center;
+    margin: 50px auto auto;
+    /*border-radius: 15px;*/
+}
+
+.post-content h4 {
+    color: #333;
+}
+
+.post-content p {
+    font-size: 14px;
+    color: #555;
+}
+
+.msg-label {
+    color: red;
+}
+

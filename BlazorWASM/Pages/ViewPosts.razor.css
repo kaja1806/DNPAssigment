@@ -1,0 +1,30 @@
+/* ViewPosts.css */
+
+/* Style for the post-card container  #f2f2f2; */
+.posts-container {
+    background-color: rgba(242, 242, 242, 0.19);
+    border: 1px solid #ddd;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 350px;
+    padding: 25px;
+    text-align: center;
+    margin: 50px auto auto;
+    border-radius: 15px;
+    
+}
+
+/* Style for the links within the post-card */
+.post-card {
+    color: #007bff;
+    text-decoration: none;
+    border: 2px solid #0a53be; /* Customize the border style */
+    padding: 10px; /* Add some padding to make it look better */
+    margin: 5px; /* Add some margin for spacing */
+    display: inline-block; /* Ensure that each title is on a separate line */
+    text-align: center;
+}
+
+.post-card :hover {
+    text-decoration: underline;
+}
