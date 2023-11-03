@@ -1,0 +1,109 @@
+@page "/ViewAPost/{id:int}"
+
+@using global::Shared.Models
+
+@using HttpClients.ClientInterfaces
+@using Microsoft.AspNetCore.Components  
+@using global::Shared.DTOs
+
+@inject NavigationManager navMgr
+@inject IPostService postService
+@inject IUserService userService
+
+
+<h3> Post Details</h3>
+
+<div class="card">
+  
+    @if (!string.IsNullOrEmpty(msg))
+    {
+        <label style="color: red">@msg</label>
+    }
+    @*else if (dto == null)
+     {
+            <label>Loading ...</label>
+        }*@
+
+    else if (post != null)   // corrected the postbody display
+    {
+        <div class="post-content">
+            <h4>@post.Title</h4>
+            <p>@post.Postbody</p>
+            <!-- Display other post details here -->
+        </div>
+
+    }
+
+ </div>
+
+@*@if (!string.IsNullOrEmpty(msg))
+{
+    <div>
+        <span>@msg</span>
+    </div>
+}*@
+
+@*@if (posts == null)
+{
+    <span>Loading..</span>
+}*@
+@*else if (!posts.Any())
+{
+    <span>No posts found</span>
+}*@
+    
+    @*<div class="posts-container">
+        @#1#foreach (Post post in posts)
+        {
+            <div class="post-card">#1#
+                <label>@post.Title</label>
+                @post.Postbody
+            $1$</div>
+        }#1#
+    </div>*@
+    
+    
+    @*<div class="post-content">
+        <h4>@post.Title</h4>
+        <p>@post.Text</p>
+        <!-- Display other post details here -->
+    </div>*@
+
+
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+   // private IEnumerable<Post>? posts;
+ //   private ViewAPostDto post;
+
+    private ViewAPostDto post;
+    private string msg = "";
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        msg = "";
+        try
+        {
+
+           // ViewAPostDto postData = await postService.GetByIdAsync(Id);
+       post = await postService.GetByIdAsync(Id);
+            if (post == null)
+            {
+                msg = "Post not found";
+            }
+    //User currentlyAssigned = users.First(user => user.UserName.Equals(todoData.OwnerName));
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+
+}
+    

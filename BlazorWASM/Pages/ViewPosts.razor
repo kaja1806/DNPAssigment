@@ -1,0 +1,64 @@
+@page "/ViewPosts"
+@using global::Shared.Models
+@using HttpClients.ClientInterfaces
+@inject IPostService PostService
+
+@*
+<link rel="stylesheet" href="css/ViewPosts.razor.css" />
+*@
+
+<h3 style="text-align: center">Overview of all Posts</h3>
+
+@if (!string.IsNullOrEmpty(msg))
+{
+    <div>
+        <span>@msg</span>
+    </div>
+}
+
+@if (posts == null)
+{
+    <span>Loading..</span>
+}
+else if (!posts.Any())
+{
+    <span>No posts found</span>
+}
+else
+{
+    <div class="posts-container">
+        @foreach (Post post in posts)
+        {
+            <div class="post-card">
+                @*<label>@post.Title</label>*@
+                <a href="/ViewAPost/@post.Id"> 
+                        @post.Title
+                        
+                    </a>
+            </div>
+        }
+    </div>
+}
+
+
+
+@code {
+    private IEnumerable<Post>? posts;
+    private string msg = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        msg = "";
+        try
+        {
+            posts = await PostService.GetPosts();  //GetPosts in web aPI first
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+    
+    
+}
