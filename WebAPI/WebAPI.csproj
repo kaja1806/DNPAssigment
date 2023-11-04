@@ -27,7 +27,6 @@
     <ItemGroup>
       <ProjectReference Include="..\Application\Application.csproj" />
       <ProjectReference Include="..\BlazorWASM\BlazorWASM.csproj" />
-      <ProjectReference Include="..\Database\Database.csproj" />
       <ProjectReference Include="..\FileData\FileData.csproj" />
     </ItemGroup>
 
