@@ -1,3 +1,4 @@
+/*
 .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
@@ -12,7 +13,7 @@
     margin-top: 20px;
 }
 .field-input {
-    width: 100%; /* You can adjust the width value as needed */
+    width: 100%; !* You can adjust the width value as needed *!
 }
 
 .acceptbtn {
@@ -24,4 +25,42 @@
 
 .button-row{
     margin-top: 15px;
+}
+*/
+
+.create-post-card {
+    background-color: whitesmoke;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.field-input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+.btn.create-button {
+    background-color: dodgerblue;
+    color: whitesmoke;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn.create-button:disabled {
+    background-color: whitesmoke;
+    cursor: not-allowed;
+}
+
+.btn.create-button:hover {
+    background-color: dodgerblue;
 }

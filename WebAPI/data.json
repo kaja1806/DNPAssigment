@@ -97,6 +97,20 @@
       "Password": "aaaaa",
       "Role": null,
       "SecurityLevel": 0
+    },
+    {
+      "Id": 15,
+      "UserName": "weronika1",
+      "Password": "student1",
+      "Role": null,
+      "SecurityLevel": 0
+    },
+    {
+      "Id": 16,
+      "UserName": "werka123",
+      "Password": "kaja123",
+      "Role": null,
+      "SecurityLevel": 0
     }
   ],
   "Posts": [
