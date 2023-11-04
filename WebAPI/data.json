@@ -3,67 +3,100 @@
     {
       "Id": 1,
       "UserName": "Florence",
-      "Password": null
+      "Password": null,
+      "Role": null,
+      "SecurityLevel": 0
     },
     {
       "Id": 2,
       "UserName": "Kacper",
-      "Password": null
+      "Password": null,
+      "Role": null,
+      "SecurityLevel": 0
     },
     {
       "Id": 3,
       "UserName": "Weronika",
-      "Password": null
+      "Password": null,
+      "Role": null,
+      "SecurityLevel": 0
     },
     {
       "Id": 4,
       "UserName": "Hey",
-      "Password": null
+      "Password": null,
+      "Role": null,
+      "SecurityLevel": 0
     },
     {
       "Id": 5,
       "UserName": "Pauline",
-      "Password": null
+      "Password": null,
+      "Role": null,
+      "SecurityLevel": 0
     },
     {
       "Id": 6,
       "UserName": "String",
-      "Password": null
+      "Password": null,
+      "Role": null,
+      "SecurityLevel": 0
     },
     {
       "Id": 7,
       "UserName": "String3",
-      "Password": null
+      "Password": null,
+      "Role": null,
+      "SecurityLevel": 0
     },
     {
       "Id": 8,
       "UserName": "Strings",
-      "Password": null
+      "Password": null,
+      "Role": null,
+      "SecurityLevel": 0
     },
     {
       "Id": 9,
       "UserName": "SomethingMagic",
-      "Password": null
+      "Password": null,
+      "Role": null,
+      "SecurityLevel": 0
     },
     {
       "Id": 10,
       "UserName": "SomethingMagic2",
-      "Password": null
+      "Password": null,
+      "Role": null,
+      "SecurityLevel": 0
     },
     {
       "Id": 11,
       "UserName": "rtdfsg",
-      "Password": "fdsg"
+      "Password": "fdsg",
+      "Role": null,
+      "SecurityLevel": 0
     },
     {
       "Id": 12,
       "UserName": "wero123",
-      "Password": "123456"
+      "Password": "123456",
+      "Role": null,
+      "SecurityLevel": 0
     },
     {
       "Id": 13,
       "UserName": "me1234",
-      "Password": "me67890"
+      "Password": "me67890",
+      "Role": null,
+      "SecurityLevel": 0
+    },
+    {
+      "Id": 14,
+      "UserName": "aaa",
+      "Password": "aaaaa",
+      "Role": null,
+      "SecurityLevel": 0
     }
   ],
   "Posts": [
