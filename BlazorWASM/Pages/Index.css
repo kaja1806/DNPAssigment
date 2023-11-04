@@ -1,0 +1,26 @@
+﻿.welcome-container {
+    text-align: center;
+    padding: 40px;
+}
+
+h1 {
+    font-size: 36px;
+    margin: 20px 0;
+    color: dodgerblue;
+}
+
+.welcome-text {
+    font-size: 18px;
+    margin: 20px 0;
+    color: rgb(128, 128, 128);
+}
+
+.get-started-link {
+    color: dodgerblue;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.get-started-link:hover {
+    text-decoration: underline;
+}

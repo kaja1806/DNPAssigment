@@ -21,4 +21,13 @@
       <Folder Include="wwwroot\sample-data\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Pages\Index.css">
+        <DependentUpon>Index.razor</DependentUpon>
+      </None>
+      <None Update="Pages\Login.css">
+        <DependentUpon>Login.razor</DependentUpon>
+      </None>
+    </ItemGroup>
+
 </Project>
