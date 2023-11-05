@@ -111,6 +111,20 @@
       "Password": "kaja123",
       "Role": null,
       "SecurityLevel": 0
+    },
+    {
+      "Id": 17,
+      "UserName": "aaaaa",
+      "Password": "123456",
+      "Role": null,
+      "SecurityLevel": 0
+    },
+    {
+      "Id": 18,
+      "UserName": "Test1",
+      "Password": "1234",
+      "Role": "User",
+      "SecurityLevel": 0
     }
   ],
   "Posts": [
