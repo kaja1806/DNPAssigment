@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Shared.Auth;
+using Shared.Models;
 using WebAPI.Services;
 
 
@@ -29,6 +30,7 @@ builder.Services.AddScoped<FileContext>();
 builder.Services.AddScoped<IUserDao, UserFileDao>(); //UserFileDAO from tutorial does not match
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddSingleton<List<User>>();
 
 //added for Adding /creating Posts
 builder.Services.AddScoped<IPostDao, PostFileDao>();
