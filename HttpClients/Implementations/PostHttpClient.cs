@@ -6,7 +6,7 @@ using Shared.Models;
 
 namespace HttpClients.Implementations;
 
-public class PostHttpClient : IPostService //Changes
+public class PostHttpClient : IPostService 
 {
     private readonly HttpClient client;
 
@@ -52,8 +52,6 @@ public class PostHttpClient : IPostService //Changes
         })!;
         return posts;  // or titles?
     }
-    
-    //view 1 post
     
     public async Task<ViewAPostDto> GetByIdAsync(int id)
     {

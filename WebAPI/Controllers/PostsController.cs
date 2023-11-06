@@ -9,22 +9,22 @@ namespace WebAPI.Controllers;
 [ApiController]
 [Route("[controller]")]
 
-public class PostsController : ControllerBase //changes
+public class PostsController : ControllerBase
 {
 
-    private readonly IPostLogic postLogic; //
+    private readonly IPostLogic postLogic; 
 
-    public PostsController(IPostLogic postLogic) //
+    public PostsController(IPostLogic postLogic) 
     {
-        this.postLogic = postLogic; //
+        this.postLogic = postLogic; 
     }
 
     [HttpPost]
-    public async Task<ActionResult<Post>> CreateAsync(PostCreationDto dto) //
+    public async Task<ActionResult<Post>> CreateAsync(PostCreationDto dto)
     {
         try
         {
-            Post created = await postLogic.CreateAsync(dto); // Id for each post? for now; but will link to user upon login soon
+            Post created = await postLogic.CreateAsync(dto); 
             return Created($"/posts/{created.Id}", created);
         }
         catch (Exception e)
@@ -34,9 +34,8 @@ public class PostsController : ControllerBase //changes
         }
     }
 
-    [HttpGet]  //complete these here what each view a post will get
+    [HttpGet]  
     public async Task<ActionResult<IEnumerable<Post>>> GetAsync([FromQuery] string? title)
-    //, [FromQuery] string? postbody)
     {
         try
         {
@@ -50,9 +49,6 @@ public class PostsController : ControllerBase //changes
             return StatusCode(500, e.Message);
         }
     }
-    
-    //anything here for 1 view post?
-    
     
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ViewAPostDto>> GetById([FromRoute] int id)

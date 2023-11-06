@@ -33,7 +33,9 @@
 @code {
     private async Task LogoutAsync()
     {
+        // call logout method
         await AuthService.LogoutAsync();
+        // naviagte to home page after logout
         NavMgr.NavigateTo("/");
     }
 }

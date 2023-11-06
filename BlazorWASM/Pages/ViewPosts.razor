@@ -3,10 +3,6 @@
 @using HttpClients.ClientInterfaces
 @inject IPostService PostService
 
-@*
-<link rel="stylesheet" href="css/ViewPosts.razor.css" />
-*@
-
 <h3 style="text-align: center">Overview of all Posts</h3>
 
 @if (!string.IsNullOrEmpty(msg))
@@ -43,20 +39,20 @@ else
 
 
 @code {
-    private IEnumerable<Post>? posts;
-    private string msg = "";
+    private IEnumerable<Post>? posts; // variable to store posts
+    private string msg = ""; // variable to store error messages
 
     protected override async Task OnInitializedAsync()
     {
         msg = "";
         try
         {
-            posts = await PostService.GetPosts();  //GetPosts in web aPI first
+            posts = await PostService.GetPosts();  // retrieve list of posts
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            msg = e.Message;
+            msg = e.Message; // set an error message
         }
     }
     

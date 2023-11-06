@@ -1,77 +1,3 @@
-@*
-@page "/CreatePost"
-@using HttpClients.ClientInterfaces
-
-@using global::Shared.DTOs
-
-@inject IPostService PostService
-@inject NavigationManager navMgr
-
-<div class="card">
-    <h5>Create Post</h5>
-    <div class="form-group field">
-        $1$<label>Title:</label>#1#
-        <input type="text" @bind="postTitle" placeholder="Title" @bind:event="oninput" class="field-input" />
-    </div>
-    
-    <div class="form-group field">
-        <textarea rows="5" @bind="postBody" placeholder="Write Here" class="field-input"></textarea>
-          @if (!string.IsNullOrEmpty(msg))
-                {
-                    <label style="color: @color">@msg</label>
-                }
-    </div>
-
-    
-     <div class="button-row">
-         <button @onclick="Create" disabled="@(string.IsNullOrEmpty(postTitle) || string.IsNullOrEmpty(postBody))" class="acceptbtn">Post</button>
-     </div>
-     
- </div>
-
-@code {
-    
-   
-    private string postTitle = ""; //
-    private string postBody = ""; //
-    private string msg = "";
-    private string color = "";
-
-   
-    private async Task Create()
-    {
-    
-        msg = "";
-       
-        try
-        {
- 
-            await PostService.CreateAsync(new PostCreationDto(postTitle, postBody)); 
-            postTitle = "";
-            postBody = " ";
-            msg = "Post successfully created";
-            color = "green";
-        }
-        
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            msg = e.Message;
-            color = "red";
-        }
-        
-        /*if (string.IsNullOrEmpty(postTitle))//
-        {
-            msg = "Title cannot be empty!";
-            return;
-        }*/
-
-     
-    }
-}
-*@
-
-
 @page "/CreatePost"
 @using HttpClients.ClientInterfaces
 @using global::Shared.DTOs
@@ -81,44 +7,50 @@
 
 <div class="card">
     <h5>Create Post</h5>
-    <AuthorizeView>
-        <Authorized>
-            <div class="form-group field">
-                @*<label>Title:</label>*@
-                <input type="text" @bind="postTitle" placeholder="Title" @bind:event="oninput" class="field-input" />
-            </div>
+        <!-- Razor component to handle authorization -->
+        <AuthorizeView>
+                <!-- Renders if the user is authorized -->
+                <Authorized>
+                    <div class="form-group field">
+                        <input type="text" @bind="postTitle" placeholder="Title" @bind:event="oninput" class="field-input"/>
+                    </div>
 
-            <div class="form-group field">
-                <textarea rows="5" @bind="postBody" placeholder="Write Here" class="field-input"></textarea>
-                @if (!string.IsNullOrEmpty(msg))
-                {
-                    <label style="color: @color">@msg</label>
-                }
-            </div>
+                    <div class="form-group field">
+                        <textarea rows="5" @bind="postBody" placeholder="Write Here" class="field-input"></textarea>
+                        @if (!string.IsNullOrEmpty(msg))
+                        {
+                            <label style="color: @color">@msg</label>
+                        }
+                    </div>
 
-            <div class="button-row">
-                <button @onclick="Create" disabled="@(string.IsNullOrEmpty(postTitle) || string.IsNullOrEmpty(postBody))" class="acceptbtn">Post</button>
-            </div>
-        </Authorized>
-        <NotAuthorized>
-            <div>
-                <span>Please <a href="/Login">log in</a> or <a href="/CreateUser">register</a> to create a post.</span>
-            </div>
-        </NotAuthorized>
-    </AuthorizeView>
+                    <div class="button-row">
+                        <button @onclick="Create" disabled="@(string.IsNullOrEmpty(postTitle) || string.IsNullOrEmpty(postBody))" class="acceptbtn">Post</button>
+                    </div>
+                </Authorized>
+                    <!-- Renders if the user is not authorized -->
+            <NotAuthorized>
+                <div>
+                    <span>Please <a href="/Login">log in</a> or <a href="/CreateUser">register</a> to create a post.</span>
+                </div>
+            </NotAuthorized>
+        </AuthorizeView>
 </div>
 
 @code {
+    // declare variables
     private string postTitle = "";
     private string postBody = "";
     private string msg = "";
     private string color = "";
 
+    // method for creating a post
     private async Task Create()
     {
+        // clear the message
         msg = "";
         try
         {
+            // call the PostService to create a post
             await PostService.CreateAsync(new PostCreationDto(postTitle, postBody));
             postTitle = "";
             postBody = " ";
@@ -128,6 +60,7 @@
         catch (Exception e)
         {
             Console.WriteLine(e);
+            // set an error message based on exception
             msg = e.Message;
             color = "red";
         }

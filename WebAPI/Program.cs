@@ -60,7 +60,7 @@ var app = builder.Build();
 app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
-    .SetIsOriginAllowed(origin => true) // allow any origin
+    .SetIsOriginAllowed(origin => true) 
     .AllowCredentials());
 
 // Configure the HTTP request pipeline.

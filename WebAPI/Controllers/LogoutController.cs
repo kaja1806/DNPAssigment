@@ -8,21 +8,13 @@ namespace WebAPI.Controllers
     [Route("[controller]")]
     public class LogoutController : ControllerBase
     {
-        private const string UsersFilePath = "users.json"; // Path to the JSON file storing user data
-
-        // Logout endpoint
+        private const string UsersFilePath = "users.json"; 
         [HttpPost]
         public IActionResult Logout(string token)
         {
-            // Implement logout logic here (e.g., clearing the token)
             try
             {
                 List<User> users = LoadUsersFromJson();
-                // Your logout logic goes here
-                // For example, you can clear the user's token
-                // user.Token = null;
-                // SaveUsersToJson(users);
-
                 return Ok(new { success = "Logged out" });
             }
             catch (Exception e)
@@ -30,7 +22,6 @@ namespace WebAPI.Controllers
                 return StatusCode(500, new { error = e.Message });
             }
         }
-
         // Load user data from the JSON file
         private List<User> LoadUsersFromJson()
         {
@@ -42,7 +33,6 @@ namespace WebAPI.Controllers
 
             return new List<User>();
         }
-
         // Save user data to the JSON file
         private void SaveUsersToJson(List<User> users)
         {
