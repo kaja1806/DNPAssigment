@@ -125,6 +125,13 @@
       "Password": "1234",
       "Role": "User",
       "SecurityLevel": 0
+    },
+    {
+      "Id": 19,
+      "UserName": "toja1",
+      "Password": "toja2",
+      "Role": "User",
+      "SecurityLevel": 0
     }
   ],
   "Posts": [
@@ -187,6 +194,11 @@
       "Id": 12,
       "Title": "Something",
       "Postbody": "Blah blah blah"
+    },
+    {
+      "Id": 13,
+      "Title": "Hey hey hey",
+      "Postbody": "Good morning and have a nice day!"
     }
   ]
 }
