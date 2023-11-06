@@ -5,14 +5,13 @@ namespace Application.DaoInterfaces;
 
 public interface IPostDao
 {
+    // define a method that allows creating a new post asynchronously
     Task<Post> CreateAsync(Post post);
     
-   // Task<User?> GetByUsernameAsync(string userName);  // get back to this later if needed
-    
-    //added code for search user param:
+    // define a method that allows retrieving a list of posts asychronously
     Task<IEnumerable<Post>> GetAsync(ViewAllPostsDto postsContains);
     
-    // for just 1 post
+    // define a method that allows retreiving a specific post based on id
     Task<Post> GetByIdAsync(int id); // and title?
 
 }

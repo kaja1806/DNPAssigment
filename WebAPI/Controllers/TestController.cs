@@ -15,21 +15,18 @@ public class TestController : ControllerBase
         return Ok("This was accepted as anonymous");
     }
 
-    // role
     [HttpGet("authorized")]
     public ActionResult GetAsAuthorized()
     {
         return Ok("This was accepted as authorized");
     }
 
-    // policy MustBeUser
     [HttpGet("mustbeuser"), Authorize("MustBeUser")]
     public ActionResult GetAsUser()
     {
         return Ok("This was accepted as a user");
     }
 
-    // manual checking
     [HttpGet("manualcheck")]
     public ActionResult GetWithManualCheck()
     {

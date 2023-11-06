@@ -36,9 +36,6 @@ public class UserFileDao : IUserDao
         return Task.FromResult(existing);
     }
     
-    
-    //code added for adding Post:
-    
     public Task<User?> GetByIdAsync(int id)
     {
         User? existing = context.Users.FirstOrDefault(u =>

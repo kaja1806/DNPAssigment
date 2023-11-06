@@ -4,26 +4,30 @@
 @inject NavigationManager NavMgr
 
 @code {
+    // declaring variables
     private string userName;
     private string password;
     private string errorLabel;
-
+    
+    // asyncrhronous method for user login
     private async Task LoginAsync()
     {
         errorLabel = "";
         try
         {
+            // attempt to log in
             await AuthService.LoginAsync(userName, password);
+           // redirect to the home page after successful login
             NavMgr.NavigateTo("/");
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
+            // display error message
             errorLabel = $"Error: {e.Message}";
         }
     }
 }
-
 
 <AuthorizeView>
     <NotAuthorized>

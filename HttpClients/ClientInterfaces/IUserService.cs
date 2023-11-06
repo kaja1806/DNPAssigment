@@ -5,7 +5,6 @@ namespace HttpClients.ClientInterfaces;
 
 public interface IUserService
 {
-    Task<User>Create(UserCreationDto dto);  // works better
-    //or CreateAsync 
+    Task<User>Create(UserCreationDto dto);  
     Task<IEnumerable<User>> GetUsers(string? usernameContains = null);
 }

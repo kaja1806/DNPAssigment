@@ -6,7 +6,7 @@ public class UserCreationDto
     public string Password { get; }
 
 
-    public UserCreationDto(string userName, string password) //expand here as well?
+    public UserCreationDto(string userName, string password) 
     {
         UserName = userName;
         Password = password;
