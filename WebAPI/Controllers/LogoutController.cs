@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
-using Shared.Models;
+using Database.Models;
 
 namespace WebAPI.Controllers
 {
@@ -8,36 +7,40 @@ namespace WebAPI.Controllers
     [Route("[controller]")]
     public class LogoutController : ControllerBase
     {
-        private const string UsersFilePath = "users.json"; 
+        private readonly AppDbContext _context;
+
+        public LogoutController(AppDbContext context)
+        {
+            _context = context;
+        }
+
         [HttpPost]
         public IActionResult Logout(string token)
         {
             try
             {
-                List<User> users = LoadUsersFromJson();
-                return Ok(new { success = "Logged out" });
+                var user = _context.Users.FirstOrDefault(u => u.Token == token);
+
+                if (user == null)
+                {
+                    return new NotFoundObjectResult("User not found");
+                }
+
+                if (user.Token == null || user.Token != token)
+                {
+                    return new OkObjectResult("Not logged in");
+                }
+
+                // Clear the user's token to log them out
+                user.Token = null;
+                _context.SaveChanges();
+
+                return new OkObjectResult("Logged out");
             }
             catch (Exception e)
             {
-                return StatusCode(500, new { error = e.Message });
+                return new BadRequestObjectResult(e);
             }
-        }
-        // Load user data from the JSON file
-        private List<User> LoadUsersFromJson()
-        {
-            if (System.IO.File.Exists(UsersFilePath))
-            {
-                var json = System.IO.File.ReadAllText(UsersFilePath);
-                return JsonSerializer.Deserialize<List<User>>(json);
-            }
-
-            return new List<User>();
-        }
-        // Save user data to the JSON file
-        private void SaveUsersToJson(List<User> users)
-        {
-            var json = JsonSerializer.Serialize(users);
-            System.IO.File.WriteAllText(UsersFilePath, json);
         }
     }
 }

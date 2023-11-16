@@ -1,4 +1,5 @@
 using Database.Models;
+using Shared.Models;
 
 namespace Database.Controllers;
 
@@ -11,13 +12,14 @@ public static class DbInitializer
             return;
         }
 
-        var users = new UserModel[]
+        UserModel?[] users = new UserModel[]
         {
             new UserModel
-            {
-                Password = "Pass",
-                Username = "Weronika"
-            }
+            (
+                "Pass",
+                "Weronika",
+                "User"
+            )
         };
         context.Users.AddRange(users);
         context.SaveChanges();

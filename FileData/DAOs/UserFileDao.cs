@@ -1,47 +1,47 @@
 using Application.DaoInterfaces;
+using Database.Models;
 using Shared.Models;
 
 namespace FileData.DAOs;
 
 public class UserFileDao : IUserDao
 {
-    private readonly FileContext context;
+    private readonly AppDbContext _context;
 
-    public UserFileDao(FileContext context)
+    public UserFileDao(AppDbContext context)
     {
-        this.context = context;
-    } 
-    
-    public Task<User> CreateAsync(User user)
+        this._context = context;
+    }
+
+    public Task<UserModel> CreateAsync(UserModel? user)
     {
         int userId = 1;
-        if (context.Users.Any())
+        if (_context.Users.Any())
         {
-            userId = context.Users.Max(u => u.Id);
+            userId = _context.Users.Max(u => u.Id);
             userId++;
         }
 
         user.Id = userId;
 
-        context.Users.Add(user);
-        context.SaveChanges();
+        _context.Users.Add(user);
+        _context.SaveChanges();
 
         return Task.FromResult(user);
     }
-    public Task<User?> GetByUsernameAsync(string userName)
+
+    public UserModel? GetByUsernameAsync(string userName)
     {
-        User? existing = context.Users.FirstOrDefault(u =>
-            u.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)
-        );
-        return Task.FromResult(existing);
+        var existing = _context.Users.FirstOrDefault(u => u.Username == userName);
+
+        return existing;
     }
-    
-    public Task<User?> GetByIdAsync(int id)
+
+    public Task GetByIdAsync(int id)
     {
-        User? existing = context.Users.FirstOrDefault(u =>
+        UserModel? existing = _context.Users.FirstOrDefault(u =>
             u.Id == id
         );
         return Task.FromResult(existing);
     }
-
 }

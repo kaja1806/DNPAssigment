@@ -1,64 +1,64 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
+using Application.Helpers;
+using Database.Models;
 using Shared.Models;
 
 namespace WebAPI.Services
 {
     public class AuthService : IAuthService
     {
-        private List<User>? _users;
-        private List<ListOfUsers>? _listOfUsers;
+        private UserModel? _users;
+        private readonly AppDbContext _context;
 
-        public AuthService(List<User>? users)
+        public AuthService(AppDbContext context)
         {
-            _users = users;
+            _context = context;
         }
 
-        public Task<User> ValidateUser(string username, string password)
+        public Task<UserModel> ValidateUser(string username, string password)
         {
-            var usersJson = File.ReadAllText("data.json");
-            var listOfUsers = JsonConvert.DeserializeObject<ListOfUsers>(usersJson);
-            _users = listOfUsers?.Users;
+            _users = _context.Users.FirstOrDefault(u => u.Username == username);
 
-            if (_users != null)
+            if (_users == null)
             {
-                User? existingUser = _users.FirstOrDefault(u =>
-                    u.UserName.Equals(username, StringComparison.OrdinalIgnoreCase));
-
-                if (existingUser == null)
-                {
-                    throw new Exception("User not found");
-                }
-
-                if (!existingUser.Password.Equals(password))
-                {
-                    throw new Exception("Password mismatch");
-                }
-
-                return Task.FromResult(existingUser);
+                throw new Exception("User not found");
             }
 
-            return null;
+            if (_users.Token != null)
+            {
+                // Clear existing token if it exists
+                _users.Token = null;
+                _context.SaveChanges();
+            }
+
+            var hashedPassword = Hashing.HashString(password);
+
+            if (!_users.Password.Equals(hashedPassword))
+            {
+                throw new Exception("Password mismatch");
+            }
+
+            return Task.FromResult(_users);
         }
 
-        public Task<User> GetUser(string username, string password)
+        public Task<UserModel> GetUser(string username, string password)
         {
             throw new NotImplementedException();
         }
 
-        public Task RegisterUser(User user)
+        public Task RegisterUser(UserModel? userModel)
         {
-            if (string.IsNullOrEmpty(user.UserName))
+            if (string.IsNullOrEmpty(userModel?.Username))
             {
                 throw new ValidationException("Username cannot be null");
             }
 
-            if (string.IsNullOrEmpty(user.Password))
+            if (string.IsNullOrEmpty(userModel.Password))
             {
                 throw new ValidationException("Password cannot be null");
             }
 
-            _users?.Add(user);
+            _users = userModel;
 
             return Task.CompletedTask;
         }
