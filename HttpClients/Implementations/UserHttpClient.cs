@@ -9,31 +9,31 @@ namespace HttpClients.Implementations;
 public class UserHttpClient : IUserService
 
 {
-    private readonly HttpClient client;
+    private readonly HttpClient _client;
 
-    public UserHttpClient(HttpClient client) 
+    public UserHttpClient(HttpClient client)
     {
-        this.client = client;
+        _client = client;
     }
 
-    
-    public async Task<User> Create(UserCreationDto dto) 
+
+    public async Task<UserModel> Create(UserCreationDto dto)
     {
-        HttpResponseMessage response = await client.PostAsJsonAsync("/users", dto); 
+        HttpResponseMessage response = await _client.PostAsJsonAsync("/users", dto);
         string result = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(result);
         }
 
-        User user = JsonSerializer.Deserialize<User>(result, new JsonSerializerOptions
+        UserModel userModel = JsonSerializer.Deserialize<UserModel>(result, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         })!;
-        return user;
+        return userModel;
     }
 
-    public Task<IEnumerable<User>> GetUsers(string? usernameContains = null)
+    public Task<IEnumerable<UserModel>> GetUsers(string? usernameContains = null)
     {
         throw new NotImplementedException();
     }

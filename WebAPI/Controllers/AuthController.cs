@@ -2,6 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Database.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Shared.DTOs;
@@ -16,17 +17,20 @@ public class AuthController : ControllerBase
 {
     private readonly IConfiguration _config;
     private readonly IAuthService _authService;
+    private readonly AppDbContext _context;
 
-    public AuthController(IConfiguration config, IAuthService authService)
+
+    public AuthController(IConfiguration config, IAuthService authService, AppDbContext context)
     {
         _config = config;
         _authService = authService;
+        _context = context;
     }
 
     [HttpPost, Route("register")]
-    public async Task<ActionResult> Register([FromBody] User user)
+    public async Task<ActionResult> Register([FromBody] UserModel? userModel)
     {
-        await _authService.RegisterUser(user);
+        await _authService.RegisterUser(userModel);
         return Ok();
     }
 
@@ -35,9 +39,10 @@ public class AuthController : ControllerBase
     {
         try
         {
-            User user = await _authService.ValidateUser(userLoginDto.Username, userLoginDto.Password);
-            string token = GenerateJwt(user);
-
+            UserModel userModel = await _authService.ValidateUser(userLoginDto.Username, userLoginDto.Password);
+            string token = GenerateJwt(userModel);
+            userModel.Token = token;
+            _context.SaveChanges();
             return Ok(token);
         }
         catch (Exception e)
@@ -46,7 +51,7 @@ public class AuthController : ControllerBase
         }
     }
 
-    private string GenerateJwt(User user)
+    private string GenerateJwt(UserModel user)
     {
         List<Claim> claims = GenerateClaims(user);
 
@@ -68,14 +73,14 @@ public class AuthController : ControllerBase
         return serializedToken;
     }
 
-    private List<Claim> GenerateClaims(User user)
+    private List<Claim> GenerateClaims(UserModel user)
     {
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, _config["Jwt:Subject"]),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)),
-            new Claim(ClaimTypes.Name, user.UserName),
+            new Claim(ClaimTypes.Name, user.Username),
             new Claim(ClaimTypes.Role, user.Role),
             new Claim("SecurityLevel", user.SecurityLevel.ToString())
         };

@@ -5,11 +5,11 @@ namespace Application.DaoInterfaces;
 public interface IUserDao
 {
     // method to create a new user asynchronously
-    Task<User> CreateAsync(User user);
-    
+    Task<UserModel> CreateAsync(UserModel? user);
+
     // method to retrieve a user by their username asynchronously
-    Task<User?> GetByUsernameAsync(string userName);
-    
+    UserModel? GetByUsernameAsync(string userName);
+
     // method to retrieve a user by their id
-    Task<User?> GetByIdAsync(int id);
+    Task GetByIdAsync(int id);
 }

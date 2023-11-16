@@ -26,10 +26,10 @@ public class JwtAuthService : IAuthService
             Username = username,
             Password = password
         };
-         // serialize UserLoginDto to JSON
-         string userAsJson = JsonSerializer.Serialize(userLoginDto);
+        // serialize UserLoginDto to JSON
+        string userAsJson = JsonSerializer.Serialize(userLoginDto);
         // create HTTP content
-         StringContent content = new(userAsJson, Encoding.UTF8, "application/json");
+        StringContent content = new(userAsJson, Encoding.UTF8, "application/json");
 
         // send a POST request
         HttpResponseMessage response = await _client.PostAsync("https://localhost:7015/auth/login", content);
@@ -49,6 +49,7 @@ public class JwtAuthService : IAuthService
 // invoke authentication state change callback
         OnAuthStateChanged.Invoke(principal);
     }
+
 // create ClaimsPrincipal based on JWT
     private static ClaimsPrincipal CreateClaimsPrincipal()
     {
@@ -75,9 +76,9 @@ public class JwtAuthService : IAuthService
     }
 
     // asynchronous method for user registration
-    public async Task RegisterAsync(User user)
+    public async Task RegisterAsync(UserModel userModel)
     {
-        string userAsJson = JsonSerializer.Serialize(user);
+        string userAsJson = JsonSerializer.Serialize(userModel);
         StringContent content = new(userAsJson, Encoding.UTF8, "application/json");
         // send a POST request
         HttpResponseMessage response = await _client.PostAsync("https://localhost:7015/auth/register", content);
@@ -89,7 +90,8 @@ public class JwtAuthService : IAuthService
             throw new Exception(responseContent);
         }
     }
-       // asyncrhonous method to get authentication data
+
+    // asyncrhonous method to get authentication data
     public Task<ClaimsPrincipal> GetAuthAsync()
     {
         // create a ClaimsPrincipal
@@ -99,7 +101,7 @@ public class JwtAuthService : IAuthService
 
 
     //  methods  from https://github.com/SteveSandersonMS/presentation-2019-06-NDCOslo/blob/master/demos/MissionControl/MissionControl.Client/Util/ServiceExtensions.cs
-   // methods to parse and decode claims from JWT
+    // methods to parse and decode claims from JWT
     private static IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
     {
         string payload = jwt.Split('.')[1];

@@ -1,4 +1,5 @@
 using Application.DaoInterfaces;
+using Application.Helpers;
 using Application.LogicInterfaces;
 using Shared.DTOs;
 using Shared.Models;
@@ -9,35 +10,37 @@ namespace Application.Logic;
 public class UserLogic : IUserLogic
 {
     // private field to hold an instance of IUserDao
-    private readonly IUserDao userDao;
+    private readonly IUserDao _userDao;
 
     // constructor for UserLogic
     public UserLogic(IUserDao userDao)
     {
-        this.userDao = userDao;
+        this._userDao = userDao;
     }
 
     // method to create a user based on the provided UserCreationDto
-    public async Task<User> CreateUser(UserCreationDto dto)
+    public async Task<UserModel?> CreateUser(UserCreationDto dto)
     {
         // check if a user with given username alsready exists
-        User? existing = await userDao.GetByUsernameAsync(dto.UserName);
+        var existing = _userDao.GetByUsernameAsync(dto.UserName);
         if (existing != null)
             throw new Exception("Username already taken!");
 
         ValidateData(dto);
-      // create new User instance with data from UserCreationDto
-        User toCreate = new User
-        {
-            UserName = dto.UserName,
-            Password = dto.Password
-        };
+        // create new User instance with data from UserCreationDto
+        var toCreate = new UserModel
+        (
+            dto.UserName,
+            Hashing.HashString(dto.Password),
+            dto.Role
+        );
 
 // create the user asynchronously and store the result
-        User created = await userDao.CreateAsync(toCreate);
+        var created = await _userDao.CreateAsync(toCreate);
 
         return created;
     }
+
 // private class to validate the data in the UserCreationDto
     private static void ValidateData(UserCreationDto userToCreate)
     {

@@ -9,20 +9,20 @@ namespace WebAPI.Controllers;
 [Route("[controller]")]
 public class UsersController : ControllerBase
 {
-    private readonly IUserLogic userLogic;
+    private readonly IUserLogic _userLogic;
 
     public UsersController(IUserLogic userLogic)
     {
-        this.userLogic = userLogic;
+        _userLogic = userLogic;
     }
 
     //method for endpoint
     [HttpPost]
-    public async Task<ActionResult<User>> CreateAsync(UserCreationDto dto)
+    public async Task<ActionResult<UserModel>> CreateAsync(UserCreationDto dto)
     {
         try
         {
-            User user = await userLogic.CreateUser(dto);
+            UserModel? user = await _userLogic.CreateUser(dto);
             return Created($"/users/{user.Id}", user);
         }
         catch (Exception e)

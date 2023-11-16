@@ -8,7 +8,7 @@ public class FileContext
     private const string filePath = "data.json";
     private DataContainer? dataContainer;  
     
-    public ICollection<Post> Posts
+    public ICollection<PostModel> Posts
     {
         get
         {      
@@ -18,7 +18,7 @@ public class FileContext
     }
     
     
-    public ICollection<User> Users
+    public ICollection<UserModel> Users
     {
         get
         {
@@ -35,8 +35,8 @@ public class FileContext
         {
             dataContainer = new()
             {
-                Posts = new List<Post>(),
-                Users = new List<User>()
+                Posts = new List<PostModel>(),
+                Users = new List<UserModel>()
             };
             return;
         }

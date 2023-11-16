@@ -23,7 +23,7 @@ else if (!posts.Any())
 else
 {
     <div class="posts-container">
-        @foreach (Post post in posts)
+        @foreach (PostModel post in posts)
         {
             <div class="post-card">
                 @*<label>@post.Title</label>*@
@@ -39,7 +39,7 @@ else
 
 
 @code {
-    private IEnumerable<Post>? posts; // variable to store posts
+    private IEnumerable<PostModel>? posts; // variable to store posts
     private string msg = ""; // variable to store error messages
 
     protected override async Task OnInitializedAsync()

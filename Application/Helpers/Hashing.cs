@@ -1,9 +1,9 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace WebAPI.Helpers;
+namespace Application.Helpers;
 
-public static class Hashing
+public class Hashing
 {
     public static string HashString(string text, string salt = "")
     {

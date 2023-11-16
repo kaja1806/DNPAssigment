@@ -1,56 +1,58 @@
 using Application.DaoInterfaces;
+using Database.Models;
 using Shared.DTOs;
 using Shared.Models;
 
 namespace FileData.DAOs;
 
-public class PostFileDao: IPostDao  
+public class PostFileDao : IPostDao
 {
     // store the FileContext instance
-    private readonly FileContext context;
+    private readonly AppDbContext _context;
 
-    public PostFileDao(FileContext context) 
+    public PostFileDao(AppDbContext context)
     {
         // initialize the FileContext via constructor injection
-        this.context = context;
+        this._context = context;
     }
 
-    public Task<Post> CreateAsync(Post post)
+    public Task<PostModel> CreateAsync(PostModel postModel)
     {
         //initialize the default ID for the new post
         int id = 1;
-        if (context.Posts.Any()) 
+        if (_context.Posts.Any())
         {
             // calcualte the next available ID
-            id = context.Posts.Max(t => t.Id); 
+            id = _context.Posts.Max(t => t.Id);
             id++;
         }
 
-        post.Id = id;
-        
-        // add the post to the context
-        context.Posts.Add(post); 
-        context.SaveChanges();
+        postModel.Id = id;
 
-        return Task.FromResult(post);
+        // add the post to the context
+        _context.Posts.Add(postModel);
+        _context.SaveChanges();
+
+        return Task.FromResult(postModel);
     }
-    
-    public Task<IEnumerable<Post>> GetAsync(ViewAllPostsDto postsContains)
+
+    public Task<IEnumerable<PostModel>> GetAsync(ViewAllPostsDto postsContains)
     {
         // get all posts from the context
-        IEnumerable<Post> posts = context.Posts.AsEnumerable();
+        IEnumerable<PostModel> posts = _context.Posts.AsEnumerable();
         if (postsContains.PostsContains != null)
         {
             // filter posts based on the title
-            posts = context.Posts.Where(p => p.Title.Contains(postsContains.PostsContains, StringComparison.OrdinalIgnoreCase));
+            posts = _context.Posts.Where(p =>
+                p.Title.Contains(postsContains.PostsContains, StringComparison.OrdinalIgnoreCase));
         }
 
         return Task.FromResult(posts);
     }
-    
-    public Task<Post?> GetByIdAsync(int postId)
+
+    public Task<PostModel?> GetByIdAsync(int postId)
     {
-        Post? existing = context.Posts.FirstOrDefault(p => p.Id == postId);
+        PostModel? existing = _context.Posts.FirstOrDefault(p => p.Id == postId);
         return Task.FromResult(existing);
     }
 }
